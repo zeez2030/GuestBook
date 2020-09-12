@@ -86,6 +86,35 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
+// @route       PUT api/messages/reply/:id
+// @desc        add reply for the message
+// @access      Private
+router.put("/reply/:id", auth, async (req, res) => {
+  const { username, body } = req.body;
+
+  //build message object
+  const replyFields = {};
+  if (body) replyFields.body = body;
+  if (username) replyFields.username = username;
+  try {
+    let message = await Message.findById(req.params.id);
+    if (!message)
+      return res.status(404).json({
+        msg: "contact not found",
+      });
+
+    message = await Message.findByIdAndUpdate(req.params.id, {
+      $push: {
+        comments: replyFields,
+      },
+    });
+    res.json(message);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server error");
+  }
+});
+
 // @route       Delete api/messages/:id
 // @desc        Delete message
 // @access      Private

@@ -15,12 +15,12 @@ const MessageSchema = mongoose.Schema({
   },
   comments: [
     {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "gusers",
-      },
+      username: String,
       body: String,
-      date: Date,
+      date: {
+        type: Date,
+        default: Date.now,
+      },
     },
   ],
 });
