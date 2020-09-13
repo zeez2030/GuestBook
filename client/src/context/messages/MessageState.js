@@ -11,7 +11,6 @@ import {
   MESSAGE_ERROR,
   GET_MESSAGES,
   CLEAR_MESSAGES,
-  GET_SENDERNAME,
 } from "../types";
 
 const MessageState = (props) => {
