@@ -4,8 +4,6 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_MESSAGE,
-  FILTER_MESSAGES,
-  CLEAR_FILTER,
   MESSAGE_ERROR,
   GET_MESSAGES,
   CLEAR_MESSAGES,
@@ -13,5 +11,53 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
+    case GET_MESSAGES:
+      return {
+        ...state,
+        messages: action.payload,
+      };
+    case ADD_MESSAGE:
+      return {
+        ...state,
+        messages: [action.payload, ...state.messages],
+      };
+    case UPDATE_MESSAGE:
+      return {
+        ...state,
+        messages: state.messages.map((message) =>
+          message._id === action.payload._id ? action.payload : message
+        ),
+      };
+    case DELETE_MESSAGE:
+      return {
+        ...state,
+        messages: state.messages.filter(
+          (message) => message.id !== action.payload
+        ),
+      };
+    case CLEAR_MESSAGES:
+      return {
+        ...state,
+        messages: null,
+        error: null,
+        current: null,
+      };
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: action.payload,
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null,
+      };
+    case MESSAGE_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    default:
+      return state;
   }
 };
