@@ -3,16 +3,16 @@ import MessageContext from "./messageContext";
 import MessageReducer from "./messageReducer";
 import axios from "axios";
 import {
-  ADD_CONTACT,
-  DELETE_CONTACT,
+  ADD_MESSAGE,
+  DELETE_MESSAGE,
   SET_CURRENT,
   CLEAR_CURRENT,
-  UPDATE_CONTACT,
-  FILTER_CONTACTS,
+  UPDATE_MESSAGE,
+  FILTER_MESSAGES,
   CLEAR_FILTER,
-  CONTACT_ERROR,
-  GET_CONTACTS,
-  CLEAR_CONTACTS,
+  MESSAGE_ERROR,
+  GET_MESSAGES,
+  CLEAR_MESSAGES,
 } from "../types";
 
 const MessageState = (props) => {
