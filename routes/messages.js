@@ -125,6 +125,7 @@ router.put("/reply/:id", auth, async (req, res) => {
         comments: replyFields,
       },
     });
+    message = await Message.findById(req.params.id);
     res.json(message);
   } catch (err) {
     console.error(err.message);

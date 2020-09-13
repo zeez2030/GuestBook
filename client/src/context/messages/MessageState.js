@@ -11,6 +11,7 @@ import {
   MESSAGE_ERROR,
   GET_MESSAGES,
   CLEAR_MESSAGES,
+  ADD_REPLY,
 } from "../types";
 
 const MessageState = (props) => {
@@ -67,6 +68,20 @@ const MessageState = (props) => {
     }
   };
 
+  //Add Reply
+  const addReply = async (reply, id) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res = await axios.put(`/api/messages/reply/${id}`, reply, config);
+      dispatch({ type: ADD_REPLY, payload: res.data });
+    } catch (err) {
+      dispatch({ type: MESSAGE_ERROR, payload: err.response.msg });
+    }
+  };
   //Delete Message
   const deleteMessage = async (id) => {
     try {
@@ -123,6 +138,7 @@ const MessageState = (props) => {
         getMessages,
         clearMessages,
         getAllMessages,
+        addReply,
       }}
     >
       {props.children}

@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import AuthContext from "../../context/auth/authContext";
 import MessageContext from "../../context/messages/messageContext";
+import ReplyItem from "./ReplyItem";
 const MessageItem = ({ message }) => {
   const authContext = useContext(AuthContext);
   const messageContext = useContext(MessageContext);
@@ -12,9 +13,15 @@ const MessageItem = ({ message }) => {
     clearCurrent,
     deleteMessage,
     updateMessage,
+    addReply,
   } = messageContext;
   const { _id, body, comments, username } = message;
-  const [editedMessage, setEditedMessage] = useState("");
+  const [editedMessage, setEditedMessage] = useState(body);
+  const [comment, setComment] = useState({
+    username: "",
+    body: "",
+  });
+
   let mine = user && user.name === username ? true : false;
   const onDelete = () => {
     deleteMessage(_id);
@@ -28,6 +35,17 @@ const MessageItem = ({ message }) => {
   const setCurrentMessage = () => setCurrent(message);
   const onChange = (e) => {
     setEditedMessage(e.target.value);
+  };
+  const onChangeComment = (e) => {
+    setComment({
+      body: e.target.value,
+      username: user.name,
+    });
+  };
+  const addComment = () => {
+    if (comment.body === "") return;
+    addReply(comment, _id);
+    setComment({ body: "", username: "" });
   };
   return (
     <div
@@ -52,7 +70,9 @@ const MessageItem = ({ message }) => {
               </button>
             )}
 
-            <button className="btn btn-dark btn-sm">reply</button>
+            <button className="btn btn-dark btn-sm" onClick={addComment}>
+              reply
+            </button>
             <button className="btn btn-danger btn-sm" onClick={onDelete}>
               Delete
             </button>
@@ -66,9 +86,30 @@ const MessageItem = ({ message }) => {
             ) : null}
           </Fragment>
         ) : (
-          <button className="btn btn-dark btn-sm">reply</button>
+          <button className="btn btn-dark btn-sm" onClick={addComment}>
+            reply
+          </button>
         )}
+        <input
+          type="text"
+          placeholder="click reply button to add  the comment.."
+          value={comment.body}
+          onChange={onChangeComment}
+        />
       </p>
+      {comments && comments.length > 0 ? (
+        <ul className="list my-2">
+          {comments.map((comment) => {
+            return (
+              <li className="bg-dark" key={comment._id}>
+                <div className="p-1">
+                  <ReplyItem username={comment.username} body={comment.body} />
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
     </div>
   );
 };

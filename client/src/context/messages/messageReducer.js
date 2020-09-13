@@ -7,6 +7,7 @@ import {
   MESSAGE_ERROR,
   GET_MESSAGES,
   CLEAR_MESSAGES,
+  ADD_REPLY,
 } from "../types";
 
 export default (state, action) => {
@@ -22,6 +23,7 @@ export default (state, action) => {
         messages: [action.payload, ...state.messages],
       };
     case UPDATE_MESSAGE:
+    case ADD_REPLY:
       return {
         ...state,
         messages: state.messages.map((message) =>
