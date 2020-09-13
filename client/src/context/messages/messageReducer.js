@@ -7,7 +7,6 @@ import {
   MESSAGE_ERROR,
   GET_MESSAGES,
   CLEAR_MESSAGES,
-  GET_SENDERNAME,
 } from "../types";
 
 export default (state, action) => {
@@ -33,7 +32,7 @@ export default (state, action) => {
       return {
         ...state,
         messages: state.messages.filter(
-          (message) => message.id !== action.payload
+          (message) => message._id !== action.payload
         ),
       };
     case CLEAR_MESSAGES:
@@ -58,11 +57,7 @@ export default (state, action) => {
         ...state,
         error: action.payload,
       };
-    case GET_SENDERNAME:
-      return {
-        ...state,
-        senderName: action.payload,
-      };
+
     default:
       return state;
   }

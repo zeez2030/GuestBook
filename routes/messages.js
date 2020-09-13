@@ -65,12 +65,14 @@ router.post(
       return res.status(400).json({
         errors: errors.array(),
       });
-
+    const user = await User.findById(req.user.id);
+    const username = user.name;
     const { body } = req.body;
     try {
       const newMessage = new Message({
         body,
         user: req.user.id,
+        username,
       });
       const message = await newMessage.save();
       res.json(message);

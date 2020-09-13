@@ -19,7 +19,6 @@ const MessageState = (props) => {
     messages: null,
     current: null,
     error: null,
-    senderName: null,
   };
   const [state, dispatch] = useReducer(MessageReducer, initialState);
 
@@ -53,20 +52,7 @@ const MessageState = (props) => {
       });
     }
   };
-  const getSenderName = async (id) => {
-    try {
-      const res = await axios.get(`/api/messages/sendername/${id}`);
-      dispatch({
-        type: GET_SENDERNAME,
-        payload: res.data,
-      });
-    } catch (err) {
-      dispatch({
-        type: MESSAGE_ERROR,
-        payload: err.response.msg,
-      });
-    }
-  };
+
   //Add Message
   const addMessage = async (message) => {
     const config = {
@@ -130,7 +116,6 @@ const MessageState = (props) => {
         messages: state.messages,
         current: state.current,
         error: state.error,
-        senderName: state.senderName,
         addMessage,
         deleteMessage,
         setCurrent,
@@ -139,7 +124,6 @@ const MessageState = (props) => {
         getMessages,
         clearMessages,
         getAllMessages,
-        getSenderName,
       }}
     >
       {props.children}

@@ -5,6 +5,7 @@ const MessageSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "gusers",
   },
+  username: String,
   body: {
     type: String,
     require: true,
