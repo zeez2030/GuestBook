@@ -28,10 +28,25 @@ router.get("/", auth, async (req, res) => {
 // @access      Private
 router.get("/all", auth, async (req, res) => {
   try {
-    const messages = await Message.find({}).sort({
+    const messages = await Message.find().sort({
       date: -1,
     });
     res.json(messages);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server error");
+  }
+});
+
+// @route       GET api/messages/sendername/:id
+// @desc        get the name of the user who wrote the message
+// @access      Private
+router.get("/sendername/:id", auth, async (req, res) => {
+  try {
+    const message = await Message.findById(req.params.id);
+    const senderId = message.user;
+    const user = await User.findById(senderId);
+    res.json(user.name);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("server error");

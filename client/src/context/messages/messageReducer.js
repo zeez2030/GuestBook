@@ -7,6 +7,7 @@ import {
   MESSAGE_ERROR,
   GET_MESSAGES,
   CLEAR_MESSAGES,
+  GET_SENDERNAME,
 } from "../types";
 
 export default (state, action) => {
@@ -56,6 +57,11 @@ export default (state, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case GET_SENDERNAME:
+      return {
+        ...state,
+        senderName: action.payload,
       };
     default:
       return state;

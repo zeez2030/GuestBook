@@ -11,6 +11,7 @@ import {
   MESSAGE_ERROR,
   GET_MESSAGES,
   CLEAR_MESSAGES,
+  GET_SENDERNAME,
 } from "../types";
 
 const MessageState = (props) => {
@@ -18,6 +19,7 @@ const MessageState = (props) => {
     messages: null,
     current: null,
     error: null,
+    senderName: null,
   };
   const [state, dispatch] = useReducer(MessageReducer, initialState);
 
@@ -36,12 +38,26 @@ const MessageState = (props) => {
       });
     }
   };
-  //Get Messages
+  //Get All Messages
   const getAllMessages = async () => {
     try {
       const res = await axios.get("/api/messages/all");
       dispatch({
         type: GET_MESSAGES,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: MESSAGE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+  const getSenderName = async (id) => {
+    try {
+      const res = await axios.get(`/api/messages/sendername/${id}`);
+      dispatch({
+        type: GET_SENDERNAME,
         payload: res.data,
       });
     } catch (err) {
@@ -114,6 +130,7 @@ const MessageState = (props) => {
         messages: state.messages,
         current: state.current,
         error: state.error,
+        senderName: state.senderName,
         addMessage,
         deleteMessage,
         setCurrent,
@@ -121,6 +138,8 @@ const MessageState = (props) => {
         updateMessage,
         getMessages,
         clearMessages,
+        getAllMessages,
+        getSenderName,
       }}
     >
       {props.children}
