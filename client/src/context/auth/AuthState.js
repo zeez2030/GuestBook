@@ -18,6 +18,7 @@ const AuthState = (props) => {
   const initialState = {
     token: localStorage.getItem("token"),
     isAuthenticated: null,
+    loading: true,
     error: null,
     user: null,
   };
@@ -86,6 +87,7 @@ const AuthState = (props) => {
         token: state.token,
         isAuthenticated: state.isAuthenticated,
         error: state.error,
+        loading: state.loading,
         user: state.user,
         register,
         loadUser,

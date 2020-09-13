@@ -3,7 +3,7 @@ import MessageContext from "../../context/messages/messageContext";
 import MessageItem from "./MessageItem";
 const Messages = () => {
   const messageContext = useContext(MessageContext);
-  const { messages, getMessages, getAllMessages, addMessage } = messageContext;
+  const { messages, getAllMessages, addMessage } = messageContext;
   const [message, setMessage] = useState({
     body: "",
   });

@@ -15,7 +15,7 @@ const MessageItem = ({ message }) => {
   } = messageContext;
   const { _id, body, comments, username } = message;
   const [editedMessage, setEditedMessage] = useState("");
-  let mine = user.name == username ? true : false;
+  let mine = user && user.name === username ? true : false;
   const onDelete = () => {
     deleteMessage(_id);
     clearCurrent();
