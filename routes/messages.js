@@ -26,7 +26,7 @@ router.get("/", auth, async (req, res) => {
 // @route       GET api/messages/all
 // @desc        get all messages
 // @access      Private
-router.get("/", auth, async (req, res) => {
+router.get("/all", auth, async (req, res) => {
   try {
     const messages = await Message.find({}).sort({
       date: -1,
