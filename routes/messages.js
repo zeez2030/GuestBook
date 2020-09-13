@@ -23,6 +23,21 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+// @route       GET api/messages/all
+// @desc        get all messages
+// @access      Private
+router.get("/", auth, async (req, res) => {
+  try {
+    const messages = await Message.find({}).sort({
+      date: -1,
+    });
+    res.json(messages);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server error");
+  }
+});
+
 // @route       Post api/messages
 // @desc        Add new message
 // @access      Private
